@@ -1,0 +1,27 @@
+nav{
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav a{
+  color:white;
+  padding:0 12px;
+}
+
+nav a:hover{
+  color:orange;
+}
+
+.card{
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card .pic{
+  min-height: 200px;
+  background-size: cover;
+  background-position: center;
+
+}  
