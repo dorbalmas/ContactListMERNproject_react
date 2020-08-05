@@ -24,7 +24,7 @@ a :hover {
 }
 
 .changeMe {
-  transition: 1s;
+  transition: 0.7s;
 }
 
 .changeMe:hover {
