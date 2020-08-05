@@ -1,6 +1,5 @@
-export const getApi = async (url) => {
-    let resp = await fetch(url);
-    let data = await resp.json();
-    console.log(data);
-    return data;
-}
+export const doApiGet = async (_url) => {
+  let resp = await fetch(_url);
+  let data = await resp.json();
+  return data;
+};
