@@ -3,6 +3,10 @@ import { useRef } from "react";
 function SearchSort(props) {
   let myInput = useRef(null);
 
+  const search2 = () => {
+    props.search(myInput.current.value);
+  };
+  console.log(myInput);
   return (
     <div className="container-fluid ">
       <div className="container">
@@ -13,11 +17,10 @@ function SearchSort(props) {
               className="form-control py-2 border-right-0 border"
               type="search"
               placeholder="search..."
-              id="example-search-input"
-            ></input>
+            />
             <span className="input-group-append">
               <button
-                onClick={() => props.search(myInput)}
+                onClick={search2}
                 className="btn btn-outline-secondary border-left-0 border"
                 type="button"
               >

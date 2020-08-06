@@ -37,7 +37,7 @@ function ListOfProducts(props) {
                 </div>
               );
             if (item.type == 2)
-              item.ups.map((upsItem) => {
+              for (let i = 0; i < item.ups.length; i++)
                 return (
                   <div
                     className="col-lg-12 border rounded my-2 changeMe"
@@ -45,20 +45,19 @@ function ListOfProducts(props) {
                   >
                     <div className="row mediaQ">
                       <img
-                        src={upsItem.thumbnailUrl}
+                        src={item.ups[i].thumbnailUrl}
                         className="float-left p-2 
 					  "
                       />
                       <div className="col-lg-6 mediaQ">
                         <h1 className=" p-2">
-                          <b>{upsItem.name}</b>
+                          <b>{item.ups[i].name}</b>
                         </h1>
-                        <p className="p-2">{upsItem.description}</p>
+                        <p className="p-2">{item.ups[i].description}</p>
                       </div>
                     </div>
                   </div>
                 );
-              });
 
             if (item.type == 3)
               return (

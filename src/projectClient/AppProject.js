@@ -10,39 +10,49 @@ function AppProject(props) {
   useEffect(() => {
     let url = "http://localhost:3000/product";
     doApiGet(url).then((data) => {
-      console.log(data);
       setProductArr(data);
     });
   }, []);
 
   const search = (_inputSearch) => {
-    productArr.map((item) => {
-      if (item.type == 1) {
-        return item.fedex.filter(
-          (item) =>
-            item.name == _inputSearch || item.description == _inputSearch
-        );
-      }
-      if (item.type == 2) {
-        item.ups.map((item) => {
-          return item.filter(
-            (item) =>
-              item.name == _inputSearch || item.description == _inputSearch
-          );
-        });
-      }
-      if (item.type == 3) {
-        return item.filter(
-          (item) =>
-            item.name == _inputSearch || item.description == _inputSearch
-        );
-      }
+    let url = "http://localhost:3000/product";
+    doApiGet(url).then((data) => {
+      console.log(data);
+      setProductArr(
+        data.filter((item) => {
+          if (item.type == 1) {
+            if (
+              item.fedex.name.includes(_inputSearch) ||
+              item.fedex.description.includes(_inputSearch)
+            ) {
+              return item;
+            }
+          }
+          if (item.type == 2) {
+            for (let i = 0; i < item.ups.length; i++) {
+              if (
+                item.ups[i].name.includes(_inputSearch) ||
+                item.ups[i].description.includes(_inputSearch)
+              ) {
+                return item;
+              }
+            }
+          }
+          if (item.type == 3) {
+            if (
+              item.name.includes(_inputSearch) ||
+              item.description.includes(_inputSearch)
+            )
+              return item;
+          }
+        })
+      );
     });
   };
   return (
     <div>
       <Header />
-      <SearchSort search={search()} />
+      <SearchSort search={search} />
       <ListOfProducts productArr={productArr} />
       <Footer />
     </div>
