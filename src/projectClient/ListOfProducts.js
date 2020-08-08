@@ -15,71 +15,28 @@ function ListOfProducts(props) {
       <div className="container">
         <div className="row">
           {props.productArr.map((item) => {
-            if (item.type == 1)
-              return (
-                <div
-                  className="col-lg-12 border rounded my-2 changeMe"
-                  style={{ backgroundColor: randonColor }}
-                >
-                  <div className="row mediaQ">
-                    <img
-                      src={item.fedex.thumbnailUrl}
-                      className="float-left p-2 
-					  "
-                    />
-                    <div className="col-lg-6 mediaQ">
-                      <h1 className=" p-2">
-                        <b>{item.fedex.name}</b>
-                      </h1>
-                      <p className="p-2">{item.fedex.description}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            if (item.type == 2)
-              for (let i = 0; i < item.ups.length; i++)
-                return (
-                  <div
-                    className="col-lg-12 border rounded my-2 changeMe"
-                    style={{ backgroundColor: randonColor }}
-                  >
-                    <div className="row mediaQ">
-                      <img
-                        src={item.ups[i].thumbnailUrl}
-                        className="float-left p-2 
-					  "
-                      />
-                      <div className="col-lg-6 mediaQ">
-                        <h1 className=" p-2">
-                          <b>{item.ups[i].name}</b>
-                        </h1>
-                        <p className="p-2">{item.ups[i].description}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-
-            if (item.type == 3)
-              return (
-                <div
-                  className="col-lg-12 border rounded my-2 changeMe"
-                  style={{ backgroundColor: randonColor }}
-                >
-                  <div className="row mediaQ">
+            return (
+              <div
+                className="col-lg-12 border rounded my-2 changeMe"
+                style={{ backgroundColor: randonColor }}
+              >
+                <div className="row mediaQ">
+                  <Tilt className="d-flex justify-content-center p-2 w-25">
                     <img
                       src={item.thumbnailUrl}
                       className="float-left p-2 
 					  "
                     />
-                    <div className="col-lg-6 mediaQ">
-                      <h1 className=" p-2">
-                        <b>{item.name}</b>
-                      </h1>
-                      <p className="p-2">{item.description}</p>
-                    </div>
+                  </Tilt>
+                  <div className="col-lg-6 mediaQ">
+                    <h1 className=" p-2">
+                      <b>{item.name}</b>
+                    </h1>
+                    <p className="p-2">{item.description}</p>
                   </div>
                 </div>
-              );
+              </div>
+            );
           })}
         </div>
       </div>
