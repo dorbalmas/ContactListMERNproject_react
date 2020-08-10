@@ -2,9 +2,9 @@ import React from "react";
 
 function Header(props) {
   return (
-    <div className="container-fluid">
-      <div className="container"></div>
-    </div>
+    <header className="text-center display-2 d-flex justify-content-center align-items-center">
+      ATLAS
+    </header>
   );
 }
 
