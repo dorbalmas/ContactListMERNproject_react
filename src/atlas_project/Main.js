@@ -4,7 +4,7 @@ import Country from "./Country";
 
 function Main(props) {
   return (
-    <div className="container-fluid p-4">
+    <div className="container-fluid p-4 border rounded mt-2">
       <div className="container" style={{ minHeight: "500px" }}>
         <Switch>
           <Route exact path="/" component={Country} />
