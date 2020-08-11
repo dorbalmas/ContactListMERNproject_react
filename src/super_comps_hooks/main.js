@@ -1,7 +1,7 @@
 import React from "react";
 import ProdList from "./prodList";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Switch, Route } from "react-router-dom";
 import AddProd from "./admin/addProd";
 import TableProds from "./admin/tableProds";
 import EditProd from "./admin/editProd";
