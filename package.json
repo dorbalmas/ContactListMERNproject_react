@@ -12,7 +12,9 @@
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.2"
+    "react-scripts": "^3.4.2",
+    "react-vanilla-tilt": "^1.0.0",
+    "vanilla-tilt": "^1.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
