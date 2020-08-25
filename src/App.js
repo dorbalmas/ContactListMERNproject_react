@@ -1,9 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import AppContacts from "./projectContacts_components/AppContacts";
 
-function App() {
-  return <div className="App">start </div>;
-}
+const App = () => {
+  return (
+    <div className="App">
+      <AppContacts />
+    </div>
+  );
+};
 
 export default App;
