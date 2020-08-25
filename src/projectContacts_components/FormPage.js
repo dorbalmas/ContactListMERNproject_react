@@ -22,11 +22,47 @@ const FormPage = () => {
     });
   }, []);
 
+  let sendForm = (event) => {
+    //  מונע מהטופס לשגר את עצמו שזה הברירת מחדל
+    event.preventDefault();
+    //event.target = הטופס עצמו ואז ניתן לדבר עם האיי די של הילדים שלו האינפוטים והסלקבוקסים
+    let bodyData = {
+      first_name: event.target.firstNameInput.value,
+      last_name: event.target.lastNameInput.value,
+      email: event.target.emailInput.value,
+      area_code: event.target.areaCodeInput.value,
+      phone_number: event.target.phoneNumberInput.value,
+    };
+    console.log(event.target.phoneNumberInput.value);
+    console.log(bodyData);
+    // console.log(bodyData);
+    //http://localhost:3000/prods/add
+
+    // let url = "http://localhost:3000/prods/add";
+
+    // fetch(url, {
+    //   method: "POST",
+    //   body: JSON.stringify(bodyData),
+    //   headers: { "content-type": "application/json" },
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data) {
+    //       console.log(data);
+    //       alert("product added!");
+    //       history.push("/admin/table");
+    //     } else {
+    //       alert("There is already prod in this name");
+    //     }
+    //   });
+  };
+
   return (
     <MDBContainer>
       <MDBRow className="d-flex align-items-center justify-content-center mt-4">
         <MDBCol md="5">
-          <form>
+          <form onSubmit={sendForm}>
             <div className="grey-text">
               <MDBInputGroup
                 material
@@ -34,12 +70,14 @@ const FormPage = () => {
                 inputs={
                   <>
                     <MDBInput
+                      id="firstNameInput"
                       className="text-center"
                       noTag
                       type="text"
                       hint="First Name"
                     />
                     <MDBInput
+                      id="lastNameInput"
                       className="text-center"
                       noTag
                       icon="user"
@@ -50,6 +88,7 @@ const FormPage = () => {
                 }
               />
               <MDBInput
+                id="emailInput"
                 label="Email"
                 icon="envelope"
                 group
@@ -59,28 +98,34 @@ const FormPage = () => {
                 success="right"
               />
               <div className="row">
-                <select className="browser-default custom-select col-lg-3">
+                <select
+                  id="areaCodeInput"
+                  className="browser-default custom-select col-lg-3"
+                >
                   <option defaultValue="+972">+972</option>
                   {areaCode_ar.map((item) => {
                     return (
-                      <option value='{"+" + item.callingCodes[0]}'>
+                      <option value={"+" + item.callingCodes[0]}>
                         +{item.callingCodes[0]}
                       </option>
                     );
                   })}
                 </select>
                 <input
+                  id="phoneNumberInput"
                   className="col-lg-9 form-control"
                   placeholder="Phone Number.."
                   type="text"
                 />
               </div>
             </div>
+            {/* <i className="israel flag"></i> */}
+
             <div className="text-center mt-3">
-              <MDBBtn outline color="secondary">
+              <button className="btn btn-info">
                 Add Contact
                 <MDBIcon far icon="paper-plane" className="ml-1" />
-              </MDBBtn>
+              </button>
             </div>
           </form>
         </MDBCol>
