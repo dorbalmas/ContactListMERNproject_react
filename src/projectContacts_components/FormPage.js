@@ -1,61 +1,84 @@
 import React, { useState, useEffect } from "react";
-import { doApiGet } from "../services/apiService";
+import { doApiGet, doApiPost } from "../services/apiService";
+import Swal from "sweetalert2";
+import { Dropdown } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import {
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBInput,
-  MDBBtn,
   MDBIcon,
   MDBInputGroup,
 } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { useHistory } from "react-router-dom";
+import { checkPhoneNumber } from "../services/usefulFunctions";
 const FormPage = () => {
   let [areaCode_ar, setareaCode] = useState([]);
-
+  let [DropdownValue, setDropdownValue] = useState(null);
+  let history = useHistory();
   useEffect(() => {
     let url = "https://restcountries.eu/rest/v2";
     doApiGet(url).then((data) => {
       setareaCode(data);
     });
   }, []);
-
-  let sendForm = (event) => {
-    //  מונע מהטופס לשגר את עצמו שזה הברירת מחדל
+  let options = areaCode_ar.map((item) => {
+    return {
+      key: item.alpha2Code.toLowerCase(),
+      value: `+${item.callingCodes[0]}`,
+      flag: item.alpha2Code.toLowerCase(),
+      text: `+${item.callingCodes[0]}`,
+    };
+  });
+  const changed = (event, { value }) => {
+    setDropdownValue(value);
+  };
+  const sendForm = (event) => {
     event.preventDefault();
-    //event.target = הטופס עצמו ואז ניתן לדבר עם האיי די של הילדים שלו האינפוטים והסלקבוקסים
-    let bodyData = {
+
+    let PhoneString = event.target.phoneNumberInput.value;
+    let newObj = {
       first_name: event.target.firstNameInput.value,
       last_name: event.target.lastNameInput.value,
       email: event.target.emailInput.value,
-      area_code: event.target.areaCodeInput.value,
-      phone_number: event.target.phoneNumberInput.value,
+      area_code: DropdownValue,
+      phone_number: checkPhoneNumber(PhoneString),
+      date: new Date(),
     };
-    console.log(event.target.phoneNumberInput.value);
-    console.log(bodyData);
-    // console.log(bodyData);
-    //http://localhost:3000/prods/add
-
-    // let url = "http://localhost:3000/prods/add";
-
-    // fetch(url, {
-    //   method: "POST",
-    //   body: JSON.stringify(bodyData),
-    //   headers: { "content-type": "application/json" },
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data) {
-    //       console.log(data);
-    //       alert("product added!");
-    //       history.push("/admin/table");
-    //     } else {
-    //       alert("There is already prod in this name");
-    //     }
-    //   });
+    console.log(newObj);
+    doApiPost(
+      "https://ideodigitalcontactproject.herokuapp.com/contacts/addContact",
+      newObj
+    ).then((data) => {
+      if (data) {
+        if (data.message == "Error!! This contact is already in the system!") {
+          Swal.fire({
+            icon: "error",
+            title: "Error!!!",
+            text:
+              "This email address is already in the system, please enter a different one!",
+          });
+        } else if (data.message) {
+          Swal.fire({
+            icon: "error",
+            title: "Error!!!",
+            text: "Please fill in all the blanks correctly!",
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Your contact has been saved",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          history.push("/list");
+        }
+      }
+    });
   };
 
   return (
@@ -98,19 +121,13 @@ const FormPage = () => {
                 success="right"
               />
               <div className="row">
-                <select
-                  id="areaCodeInput"
-                  className="browser-default custom-select col-lg-3"
-                >
-                  <option defaultValue="+972">+972</option>
-                  {areaCode_ar.map((item) => {
-                    return (
-                      <option value={"+" + item.callingCodes[0]}>
-                        +{item.callingCodes[0]}
-                      </option>
-                    );
-                  })}
-                </select>
+                <Dropdown
+                  className="col-lg-3 form-control"
+                  placeholder="Area Code.."
+                  search
+                  options={options}
+                  onChange={changed}
+                />
                 <input
                   id="phoneNumberInput"
                   className="col-lg-9 form-control"
@@ -119,7 +136,6 @@ const FormPage = () => {
                 />
               </div>
             </div>
-            {/* <i className="israel flag"></i> */}
 
             <div className="text-center mt-3">
               <button className="btn btn-info">
